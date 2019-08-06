@@ -14,7 +14,7 @@ node('docker') {
 
   stage('Collect Plugins') {
     docker.image("cloudogu/scm-plugin-snapshot:1.0.0").inside("--entrypoint=''") {
-      sh "/scm-plugin-snapshot /plugins"
+      sh "/scm-plugin-snapshot plugins"
     }
   }
 
@@ -22,7 +22,7 @@ node('docker') {
     docker.image("alpine:3.10.1").inside {
       sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
     }
-    archiveArtifacts 'plugins-dev-${params.version}.tar.gz'
+    archiveArtifacts "plugins-dev-${params.version}.tar.gz"
   }
 
 }

@@ -9,7 +9,7 @@ node('docker') {
   ])
 
   stage("Clean") {
-    sh "rm -rf plugins.tar.gz plugins"
+    sh "rm -rf plugins-dev-*.tar.gz plugins"
   }
 
   stage('Collect Plugins') {
@@ -22,7 +22,7 @@ node('docker') {
     docker.image("alpine:3.10.1").inside {
       sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
     }
-    archiveArtifacts 'plugins.tar.gz'
+    archiveArtifacts 'plugins-dev-${params.version}.tar.gz'
   }
 
 }

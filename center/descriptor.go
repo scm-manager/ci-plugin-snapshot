@@ -28,9 +28,14 @@ type Conditions struct {
 	MinVersion string `xml:"min-version"`
 }
 
+type Dependencies struct {
+  Dependency []string `xml:"dependency"`
+}
+
 type PluginDescriptor struct {
 	Information Information `xml:"information"`
 	Conditions  Conditions  `xml:"conditions"`
+	Dependencies Dependencies `xml:"dependencies"`
 }
 
 func ReadDescriptor(smpFile string) (PluginDescriptor, error) {

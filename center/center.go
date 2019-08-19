@@ -1,7 +1,7 @@
 package center
 
 type Link struct {
-	Href string `json:"name"`
+	Href string `json:"href"`
 }
 
 type Links struct {

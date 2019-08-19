@@ -22,6 +22,7 @@ node('docker') {
     docker.image("alpine:3.10.1").inside {
       sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
     }
+    archiveArtifacts "plugins/plugin-center.json"
     archiveArtifacts "plugins-dev-${params.version}.tar.gz"
   }
 

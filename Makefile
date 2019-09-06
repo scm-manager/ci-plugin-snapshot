@@ -1,4 +1,4 @@
-VERSION:=1.1.3
+VERSION:=1.1.4
 
 build: dependencies
 	GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o scm-plugin-snapshot

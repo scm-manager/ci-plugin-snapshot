@@ -23,6 +23,8 @@ const API_JOBS = "https://oss.cloudogu.com/jenkins/job/scm-manager/job/plugins/a
 func main() {
 	var configPath string
 	flag.StringVar(&configPath, "config", "", "configuration file")
+	var downloadPrefix string
+	flag.StringVar(&downloadPrefix, "prefix", "", "prefix for own plugin urls")
 
 	flag.Parse()
 
@@ -45,7 +47,7 @@ func main() {
 	pluginJobs := filterPluginJobs(jobs.Jobs, config)
 	plugins := downloadPlugins(directory, pluginJobs)
 	writePluginIndex(directory, plugins)
-	err = writePluginJson(directory, plugins)
+	err = writePluginJson(directory, plugins, downloadPrefix)
 	if err != nil {
 		log.Fatal("failed to create plugin center json", err)
 	}
@@ -93,7 +95,7 @@ func writePluginIndex(directory string, plugins []Plugin) {
 	}
 }
 
-func writePluginJson(directory string, plugins []Plugin) error {
+func writePluginJson(directory string, plugins []Plugin, downloadPrefix string) error {
 	entries := []center.PluginCenterEntry{}
 	for _, plugin := range plugins {
 		smp := path.Join(directory, plugin.File)
@@ -109,7 +111,11 @@ func writePluginJson(directory string, plugins []Plugin) error {
 		}
 
 		entry.Sha256sum = fmt.Sprintf("%x", sha256.Sum256(data))
-		entry.Links = center.Links{center.Link{plugin.URL}}
+		if downloadPrefix == "" {
+			entry.Links = center.Links{center.Link{plugin.URL}}
+		} else {
+			entry.Links = center.Links{center.Link{createLink(downloadPrefix, plugin.File)}}
+		}
 
 		entries = append(entries, entry)
 	}
@@ -125,6 +131,10 @@ func writePluginJson(directory string, plugins []Plugin) error {
 		log.Fatal("failed to write plugin center json", err)
 	}
 	return nil
+}
+
+func createLink(prefix string, file string) string {
+	return prefix + "/" + file
 }
 
 func downloadPlugins(directory string, pluginJobs []Job) []Plugin {

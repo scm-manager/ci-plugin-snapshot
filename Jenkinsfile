@@ -2,7 +2,7 @@ node('docker') {
 
   properties([
     // Keep only the last 10 build to preserve space
-    buildDiscarder(logRotator(numToKeepStr: '10')),
+    buildDiscarder(logRotator(daysToKeepStr: '180')),
     parameters([
         string(name: 'version', trim: true, description: 'version used for plugin tar')
     ])

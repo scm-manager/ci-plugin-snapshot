@@ -13,7 +13,7 @@ node('docker') {
   }
 
   stage('Collect Plugins') {
-    docker.image("cloudogu/scm-plugin-snapshot:1.1.4").inside("--entrypoint=''") {
+    docker.image("scmmanager/scm-plugin-snapshot:1.1.5").inside("--entrypoint=''") {
       sh "/scm-plugin-snapshot plugins"
     }
   }

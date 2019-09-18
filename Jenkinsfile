@@ -4,7 +4,7 @@ node('docker') {
     // Keep only the last 10 build to preserve space
     buildDiscarder(logRotator(daysToKeepStr: '180')),
     parameters([
-        string(name: 'version', trim: true, description: 'version used for plugin tar')
+        string(name: 'version', defaultValue: 'SNAPSHOT', trim: true, description: 'version used for plugin tar')
     ])
   ])
 

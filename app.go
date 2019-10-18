@@ -214,7 +214,7 @@ func downloadPlugin(directory string, job Job, branch string) (Plugin, error) {
 	plugin.Revision = findRevision(job, build)
 	plugin.Build = build.Number
 	plugin.Branch = branch
-	plugin.Repository = "https://bitbucket.org/scm-manager/" + job.Name
+	plugin.Repository = "https://github.com/scm-manager/" + job.Name
 
 	return plugin, nil
 }

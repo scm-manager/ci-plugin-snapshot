@@ -13,13 +13,13 @@ node('docker') {
   }
 
   stage('Collect Plugins') {
-    docker.image("scmmanager/ci-plugin-snapshot:1.1.5").inside("--entrypoint=''") {
+    docker.image("scmmanager/ci-plugin-snapshot:1.1.6").inside("--entrypoint=''") {
       sh "/ci-plugin-snapshot plugins"
     }
   }
 
   stage('Archive Plugins') {
-    docker.image("alpine:3.10.1").inside {
+    docker.image("alpine:3.11.3").inside {
       sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
     }
     archiveArtifacts "plugins/plugin-center.json"

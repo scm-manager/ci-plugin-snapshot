@@ -8,7 +8,7 @@ dependencies:
 	GO111MODULE=on go get
 
 image:
-	docker build -t scm-manager/${APP}:${VERSION} .
+	docker build -t scmmanager/${APP}:${VERSION} .
 
 deploy: image
-	docker push scm-manager/${APP}:${VERSION}
+	docker push scmmanager/${APP}:${VERSION}

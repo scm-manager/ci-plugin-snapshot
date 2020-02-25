@@ -18,7 +18,7 @@ import (
 	"time"
 )
 
-const API_JOBS = "https://oss.cloudogu.com/jenkins/job/scm-manager/job/plugins/api/json"
+const API_JOBS = "https://oss.cloudogu.com/jenkins/job/scm-manager-plugins/api/json"
 
 func main() {
 	var configPath string

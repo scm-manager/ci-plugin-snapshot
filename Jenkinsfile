@@ -13,8 +13,8 @@ node('docker') {
   }
 
   stage('Collect Plugins') {
-    docker.image("scmmanager/scm-plugin-snapshot:1.1.5").inside("--entrypoint=''") {
-      sh "/scm-plugin-snapshot plugins"
+    docker.image("scmmanager/ci-plugin-snapshot:1.1.5").inside("--entrypoint=''") {
+      sh "/ci-plugin-snapshot plugins"
     }
   }
 

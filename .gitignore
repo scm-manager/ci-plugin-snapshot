@@ -123,3 +123,4 @@ fabric.properties
 
 plugins-dev*.tar.gz
 .idea
+ci-plugin-snapshot

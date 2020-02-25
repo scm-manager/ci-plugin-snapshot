@@ -1,4 +1,4 @@
-module bitbucket.org/scm-manager/plugin-snapshot
+module github.com/scm-manager/ci-plugin-snapshot
 
 go 1.12
 

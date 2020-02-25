@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bitbucket.org/scm-manager/plugin-snapshot/center"
+	"github.com/scm-manager/ci-plugin-snapshot/center"
 	"crypto/sha256"
 	"encoding/json"
 	"flag"

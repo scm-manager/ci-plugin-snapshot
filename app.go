@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/scm-manager/ci-plugin-snapshot/center"
 	"crypto/sha256"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/pkg/errors"
+	"github.com/scm-manager/ci-plugin-snapshot/center"
 	"gopkg.in/yaml.v2"
 	"io"
 	"io/ioutil"
@@ -49,7 +49,7 @@ func main() {
 	writePluginIndex(directory, plugins)
 	err = writePluginJson(directory, plugins, downloadPrefix)
 	if err != nil {
-		log.Fatal("failed to create plugin center json", err)
+		log.Fatal("failed to create plugin center json: ", err)
 	}
 }
 
@@ -99,6 +99,9 @@ func writePluginJson(directory string, plugins []Plugin, downloadPrefix string) 
 	entries := []center.PluginCenterEntry{}
 	for _, plugin := range plugins {
 		smp := path.Join(directory, plugin.File)
+		if plugin.File == "" {
+			return errors.Errorf("no file found for plugin %s", plugin.name)
+		}
 		descriptor, err := center.ReadDescriptor(smp)
 		if err != nil {
 			return err

@@ -1,3 +1,4 @@
+#!groovy
 node('docker') {
 
   properties([
@@ -8,22 +9,30 @@ node('docker') {
     ])
   ])
 
-  stage("Clean") {
-    sh "rm -rf plugins-dev-*.tar.gz plugins"
-  }
+  catchError {
 
-  stage('Collect Plugins') {
-    docker.image("scmmanager/ci-plugin-snapshot:1.1.7").inside("--entrypoint=''") {
-      sh "/ci-plugin-snapshot plugins"
+    stage("Clean") {
+        sh "rm -rf plugins-dev-*.tar.gz plugins"
     }
-  }
 
-  stage('Archive Plugins') {
-    docker.image("alpine:3.11.3").inside {
-      sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
+    stage('Collect Plugins') {
+        docker.image("scmmanager/ci-plugin-snapshot:1.1.7").inside("--entrypoint=''") {
+            sh "/ci-plugin-snapshot plugins"
+        }
     }
-    archiveArtifacts "plugins/plugin-center.json"
-    archiveArtifacts "plugins-dev-${params.version}.tar.gz"
-  }
 
+    stage('Archive Plugins') {
+        docker.image("alpine:3.11.3").inside {
+            sh "tar cvfz plugins-dev-${params.version}.tar.gz plugins"
+        }
+        archiveArtifacts "plugins/plugin-center.json"
+        archiveArtifacts "plugins-dev-${params.version}.tar.gz"
+    }
+
+  }
+  if (currentBuild.currentResult == 'FAILURE') {
+    mail to: "scm-team@cloudogu.com",
+         subject: "${JOB_NAME} - Build #${BUILD_NUMBER} - ${currentBuild.currentResult}!",
+         body: "Check console output at ${BUILD_URL} to view the results."
+  }
 }

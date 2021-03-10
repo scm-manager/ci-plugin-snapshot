@@ -22,6 +22,7 @@ type PluginCenterEntry struct {
   Version      string         `json:"version,omitempty"`
   Author       string         `json:"author,omitempty"`
   Dependencies []string       `json:"dependencies,omitempty"`
+  OptionalDependencies []string `json:"optionalDependencies,omitempty"`
   Conditions   JsonConditions `json:"conditions,omitempty"`
   Sha256sum    string         `json:"sha256sum,omitempty"`
   Links        Links          `json:"_links"`

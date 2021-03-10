@@ -32,10 +32,15 @@ type Dependencies struct {
   Dependency []string `xml:"dependency"`
 }
 
+type OptionalDependencies struct {
+  OptionalDependency []string `xml:"dependency"`
+}
+
 type PluginDescriptor struct {
 	Information Information `xml:"information"`
 	Conditions  Conditions  `xml:"conditions"`
 	Dependencies Dependencies `xml:"dependencies"`
+	OptionalDependencies OptionalDependencies `xml:"optional-dependencies"`
 }
 
 func ReadDescriptor(smpFile string) (PluginDescriptor, error) {

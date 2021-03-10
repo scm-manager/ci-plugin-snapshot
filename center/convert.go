@@ -9,6 +9,7 @@ func Convert(descriptor PluginDescriptor) PluginCenterEntry {
     Description:  descriptor.Information.Description,
     Author:       descriptor.Information.Author,
     Dependencies: descriptor.Dependencies.Dependency,
+    OptionalDependencies: descriptor.OptionalDependencies.OptionalDependency,
     Conditions:   convertConditions(descriptor.Conditions),
   }
 }
